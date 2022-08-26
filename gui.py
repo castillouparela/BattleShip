@@ -136,3 +136,6 @@ while animating:
         # update screen
         pygame.time.wait(100)
         pygame.display.flip()
+
+
+        ##ESTO ES UNA PRUEBA
