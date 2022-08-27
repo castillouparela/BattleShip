@@ -142,33 +142,23 @@ class Game:
         unknown_with_neighboring_hits_2V = []
 
         for u in unknown:
-            #Busca hits
-            if u+1 in hits or u-1 in hits: #hit a la derecha o a la izquierda (1 recuadro)
-                unknown_with_neighboring_hits_H.append(u)
-            if u-10 in hits or u+10 in hits: #hit arriba o abajo (1 recuadro)
-                unknown_with_neighboring_hits_V.append(u)
-            if u + 2 in hits or u - 2 in hits: #hit a la derecha o a la izquierda (2 recuadros)
-                unknown_with_neighboring_hits_2H.append(u)
-            if u - 20 in hits or u + 20 in hits: #hit arriba o abajo (2 recuadros)
-                unknown_with_neighboring_hits_2H.append(u)
-
-        # pick "U" square that has a neighbor marked as "H"
-
-        if len(unknown_with_neighboring_hits_H) > 0:  # Encontró un hit en horizontal
-            self.make_move(random.choice(unknown_with_neighboring_hits_H))
-            return
-
-        if len(unknown_with_neighboring_hits_V) > 0:
-            self.make_move(random.choice(unknown_with_neighboring_hits_V))
-            return
+            # Busca hits
+            if u + 1 in hits or u - 1 in hits or u - 10 in hits or u + 10 in hits:  # hit a la derecha o a la izquierda (1 recuadro)
+                unknown_with_neighboring_hits.append(u)
+            if u + 2 in hits or u - 2 in hits or u - 20 in hits or u + 20 in hits:  # hit a la derecha o a la izquierda (2 recuadros)
+                unknown_with_neighboring_hits_2.append(u)
 
         # pick "U" square that has neighbors both marked as "H"
         for u in unknown:
 
-            if u in unknown_with_neighboring_hits_V and u in unknown_with_neighboring_hits_2V:
-                print(u)
+            if u in unknown_with_neighboring_hits and u in unknown_with_neighboring_hits_2:
                 self.make_move(u)
                 return
+
+        if len(unknown_with_neighboring_hits) > 0:
+            self.make_move(random.choice(unknown_with_neighboring_hits))
+            return
+
         # checker board pattern
         checker_board = []
         for u in unknown:
