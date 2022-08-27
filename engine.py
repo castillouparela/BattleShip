@@ -135,11 +135,8 @@ class Game:
         hits = [i for i, square in enumerate(search) if square == "H"]
 
         # search in neighborhood of hits
-        unknown_with_neighboring_hits_H = []
-        unknown_with_neighboring_hits_V = []
-
-        unknown_with_neighboring_hits_2H = []
-        unknown_with_neighboring_hits_2V = []
+        unknown_with_neighboring_hits = []
+        unknown_with_neighboring_hits_2 = []
 
         for u in unknown:
             # Busca hits
