@@ -74,7 +74,7 @@ class Game:
         self.human1 = human1
         self.human2 = human2
         self.player1 = Player()
-        self.player2 = Player()
+        self.player2 = self.player1
         self.player1_turn = True
         self.computer_turn = True if not self.human1 else False
         self.over = False
