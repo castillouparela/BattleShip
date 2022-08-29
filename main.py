@@ -71,7 +71,7 @@ class Node():
     ### Crear método para criterio objetivo
     ### Por defecto vamos a poner que sea igual al estado objetivo, para cada caso se puede sobreescribir la función
     def isObjective(self):
-        return self.state==self.objective
+        return self.state == self.objective
 
         # --- CLASS ÁRBOL ---#
 
@@ -303,24 +303,15 @@ class Tree():
 
 class Game:
     # Construtor de la clase Game esta clase contiene la logica detras del juego Battelship o Batalla Naval contiene ademas la iterfaz en consola y los metodos necesarios para jugar
-    def __init__(self, name, game_opt="", b1=[], b2=[], p1_name="", p2_name="", p1_ships=[], p2_ships=[],
-                 ships=[5, 4, 3, 3, 2], p1_guess_board=[], p2_guess_board=[], p1_guess_list=[],
-                 p2_guess_list=[]):
-        self.name = name
+    def __init__(self, game_opt="", b=[], ships_Positions=[], ships=[5, 4, 3, 3, 2], p1_guess_board=[], p2_guess_board=[]):
         self.game_opt = game_opt
-        self.b1 = b1  # Esta atributo corresponde al tablero del jugador 1. En caso de ser PvAI este sera el tablero de la maquina. O correspinde a Oceano. S a Barco y H si undo de los barcos ha sido encontrado
-        self.b2 = b2  # Este atriburo corresponde al tablero del jugador 2. En caso de ser PvAi este sera el tablero del usuario. O correspinde a Oceano. S a Barco y H si undo de los barcos ha sido encontrado
-        self.p1_name = p1_name  # Nombre del jugadore 1. AI si es en el modo PvAI
-        self.p2_name = p2_name  # Nombre del jugador 2
-        self.p1_ships = p1_ships  # Lista que corresponde a las cordenadas x,y donde se encuentran los barcos del jugador 1
-        self.p2_ships = p2_ships  # Lista que corresponde a las coordenadas x,y donde se encuentran los barcos del jugador 2
-        self.ships = ships  # Lista que contiene el tamaño de los 5 barcos del juego.
+        self.b = b  # Esta atributo corresponde al tablero del jugador 1. En caso de ser PvAI este sera el tablero de la maquina. O correspinde a Oceano. S a Barco y H si undo de los barcos ha sido encontrado
+        self.ships_Positions = ships_Positions  ## Únicamnete existirán posiciones para los barcos en general sin discretizar el jugador al que pertenecen
+        self.ships = ships  # Lista que contiene el tamaño de los 5 barcos del juego
         self.p1_guess_board = p1_guess_board  # Este es el tablero de las posiciones que ha adiviando el jugador 1. O = Oceano, H = Impacto M = Disparo Fallido
         self.p2_guess_board = p2_guess_board  # Este es el tablero de las posiciones que ha adiviando el jugador 2. O = Oceano, H = Impacto M = Disparo Fallido
-        self.p1_guess_list = p1_guess_list  # Lista que contiene las posiciones que adivina el p1
-        self.p2_guess_list = p2_guess_list  # Lista que contiene las posiciones que adivina el p2
 
-        # Metodo para jugar Batalla Naval. Tiene 2 modos de juego, jugar contra la maquina, jugar contra otro jugador metodo mas que todo para pruebas
+        # BattleShip tiene 2 modos de juego, jugar contra la maquina, jugar contra otro jugador metodo en modo de prueba
 
     def play_game(self):
         print("BATTLESHIP")

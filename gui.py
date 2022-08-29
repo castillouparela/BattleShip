@@ -16,7 +16,7 @@ WIDTH = SQ_SIZE * 10 * 2 + H_MARGIN
 HEIGHT = SQ_SIZE * 10 * 2 + V_MARGIN
 SCREEN = pygame.display.set_mode((WIDTH, HEIGHT))
 INDENT = 10
-HUMAN1 = False #True es el jugador
+HUMAN1 = True #True es el jugador
 HUMAN2 = False #False coincide con la AI
 
 
