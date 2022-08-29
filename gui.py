@@ -16,7 +16,7 @@ WIDTH = SQ_SIZE * 10 * 2 + H_MARGIN
 HEIGHT = SQ_SIZE * 10 * 2 + V_MARGIN
 SCREEN = pygame.display.set_mode((WIDTH, HEIGHT))
 INDENT = 10
-HUMAN1 = False #True es el jugador
+HUMAN1 = True #True es el jugador
 HUMAN2 = False #False coincide con la AI
 
 
@@ -113,14 +113,14 @@ while animating:
         # draw grids
         # search grids
         draw_grid(game.player1, search=True)
-        draw_grid(game.player2, search=True, left=((WIDTH - H_MARGIN) // 2 + H_MARGIN), top=((HEIGHT - V_MARGIN) // 2) + V_MARGIN)
+        #draw_grid(game.player2, search=True, left=((WIDTH - H_MARGIN) // 2 + H_MARGIN), top=((HEIGHT - V_MARGIN) // 2) + V_MARGIN)
 
         # position grids
-        draw_grid(game.player1, top=(HEIGHT - V_MARGIN) // 2 + V_MARGIN)  # position player 1
+        #draw_grid(game.player1, top=(HEIGHT - V_MARGIN) // 2 + V_MARGIN)  # position player 1
         #draw_grid(game.player2, left=((WIDTH - H_MARGIN) // 2 + H_MARGIN))  # position player 2
 
         # draw ships
-        draw_ships(game.player1, top=(HEIGHT - V_MARGIN) // 2 + V_MARGIN)
+        #draw_ships(game.player1, top=(HEIGHT - V_MARGIN) // 2 + V_MARGIN)
         #draw_ships(game.player2, left=((WIDTH - H_MARGIN) // 2 + H_MARGIN))
 
         # computer moves
