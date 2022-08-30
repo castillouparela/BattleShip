@@ -3,6 +3,12 @@ from engine import Game
 # setting up pygame
 import pygame
 
+
+import pydot
+from IPython.display import Image, display
+import queue
+import numpy as np
+
 pygame.init()
 pygame.font.init()
 pygame.display.set_caption("Battleship")
@@ -41,7 +47,6 @@ def draw_grid(player, search=False, left=0, top=0):
             x += SQ_SIZE // 2
             y += SQ_SIZE // 2
             pygame.draw.circle(SCREEN, COLORS[player.search[i]], (x, y), radius=SQ_SIZE // 4)
-
 
 # functions to draw ships onto the position grids
 def draw_ships(player, left=0, top=0):
@@ -125,7 +130,7 @@ while animating:
 
         # computer moves
         if not game.over and game.computer_turn:
-            game.basic_ai()
+            game.basic_ai() #CAMBIAR POR EL INICIO DEL JUEGO EN ALPHA-BETA
 
         # game over message
         if game.over:
@@ -136,6 +141,3 @@ while animating:
         # update screen
         pygame.time.wait(200)
         pygame.display.flip()
-
-
-        ##ESTO ES UNA PRUEBA
