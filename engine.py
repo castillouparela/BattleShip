@@ -24,7 +24,7 @@ class Player:
         self.place_ships(sizes=[5, 4, 3, 3, 2])
         list_of_lists = [ship.indexes for ship in self.ships]
         self.indexes = [index for sublist in list_of_lists for index in sublist]
-        self.totalSP = 0  # Conteo de barcos hundidos para P1
+        self.totalSP = 0  # Conteo de barcos hundidos para el jugador
 
     def place_ships(self, sizes):
         for size in sizes:
@@ -80,65 +80,67 @@ class Game:
         self.computer_turn = True if not self.human1 else False
         self.over = False
         self.result = None
-        self.scoreP1=0
-        self.scoreP2=0
+        self.scoreP1 = 0
+        self.scoreP2 = 0
 
     def make_move(self, i):
         player = self.player1 if self.player1_turn else self.player2
         opponent = self.player2 if self.player1_turn else self.player1
         hit = False
 
-        # set miss or hit
-        if i in opponent.indexes:
-            player.search[i] = "H"
-            hit = True
+        if player.search[i] == "U":  # Validate if the position was played
 
-            # check if ship is sunk
-            for ship in opponent.ships:
-                sunk = True
-                for i in ship.indexes:
-                    if player.search[i] == "U":
-                        sunk = False
-                        break
-                if sunk:
+            # set miss or hit
+            if i in opponent.indexes and player.search[i] == "U":
+                player.search[i] = "H"
+                hit = True
+
+                # check if ship is sunk
+                for ship in opponent.ships:
+                    sunk = True
                     for i in ship.indexes:
-                        player.search[i] = "S"
-                if self.player1_turn:
-                    self.scoreP1 = self.scoreP1 + 1
-                else:
-                    self.scoreP2 = self.scoreP2 + 1
+                        if player.search[i] == "U":
+                            sunk = False
+                            break
+                    if sunk:
+                        for i in ship.indexes:
+                            player.search[i] = "S"
+                    if self.player1_turn:
+                        self.scoreP1 = self.scoreP1 + 1
+                    else:
+                        self.scoreP2 = self.scoreP2 + 1
 
-        else:
-            player.search[i] = "M"
-        # check if game over
-        game_over = True
-        for i in opponent.indexes:
-            if player.search[i] == "U":
-                game_over = False
-        self.over = game_over
-        print("TOTAL SP1")
-        print(self.scoreP1)
-        print("TOTAL SP2")
-        print(self.scoreP2)
-        self.result = 1 if self.scoreP1 > self.scoreP2 else 2
+            else:
+                player.search[i] = "M"
+            # check if game over
+            game_over = True
+            for i in opponent.indexes:
+                if player.search[i] == "U":
+                    game_over = False
+            self.over = game_over
+            print("TOTAL SP1")
+            print(self.scoreP1)
+            print("TOTAL SP2")
+            print(self.scoreP2)
+            self.result = 1 if self.scoreP1 > self.scoreP2 else 2
 
-        # change the active team
-        if not hit:
+            # change the active team
+            if not hit:
 
-            self.player1_turn = not self.player1_turn
+                self.player1_turn = not self.player1_turn
 
-            # switch between human and computer turns
-            if (self.human1 and not self.human2) or (not self.human1 and self.human2):
-                self.computer_turn = not self.computer_turn
+                # switch between human and computer turns
+                if (self.human1 and not self.human2) or (not self.human1 and self.human2):
+                    self.computer_turn = not self.computer_turn
 
-    def random_ai(self):
+    """def random_ai(self):
         search = self.player1.search if self.player1_turn else self.player2.search
         unknown = [i for i, square in enumerate(search) if square == "U"]
         if len(unknown) > 0:
             random_index = random.choice(unknown)
-            self.make_move(random_index)
+            self.make_move(random_index)"""
 
-    def basic_ai(self):
+    """def basic_ai(self):
 
         # setup
         search = self.player1.search if self.player1_turn else self.player2.search
@@ -179,4 +181,4 @@ class Game:
             return
 
         # random moves
-        self.random_ai()
+        self.random_ai()"""

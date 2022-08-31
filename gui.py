@@ -66,7 +66,7 @@ player2 = Player()
 game = engine.Game(HUMAN1, HUMAN2)
 nodeInit = main.Battleship(player=game.player1_turn, value="inicio", state=game.player1.search, game=game,
                            operators=[i for i in range(100)])
-treeAlfaBeta = main.Tree(nodeInit, [i for i in range(100)])  # Considerar ubicar 100 como posición máxima en la matriz
+treeAlfaBeta = main.Tree(nodeInit, [i for i in range(100)])
 
 # pygame loop
 animating = True
@@ -107,8 +107,12 @@ while animating:
                 pausing = not pausing
 
             # return key to restart
-            if event.key == pygame.K_RETURN:
-                game = Game(HUMAN1, HUMAN2)
+            if event.key == pygame.K_RETURN:  # Reinit to game
+                game = engine.Game(HUMAN1, HUMAN2)
+                nodeInit = main.Battleship(player=game.player1_turn, value="inicio", state=game.player1.search,
+                                           game=game,
+                                           operators=[i for i in range(100)])
+                treeAlfaBeta = main.Tree(nodeInit, [i for i in range(100)])
 
     # EXECUTION
     if not pausing:

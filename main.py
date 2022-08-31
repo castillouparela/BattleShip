@@ -1,6 +1,7 @@
 import pydot
 import queue
 import random
+import pygame
 
 import engine
 from engine import Game, Player, Ship  # Se importan las clases necesarias
@@ -377,7 +378,7 @@ class Battleship(Node):
                 self.game.make_move(random.choice(checker_board))
             return 0
 
-        # random moves
+        """# random moves
         if self.game.computer_turn:
             self.game.random_ai()
-        return -1
+        return -1"""
