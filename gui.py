@@ -1,5 +1,8 @@
+import engine
+import main
 from engine import Player
 from engine import Game
+from main import *
 # setting up pygame
 import pygame
 
@@ -134,7 +137,7 @@ while animating:
         # game over message
         if game.over:
             if game.result == 1:
-                text = "Player HUMAN wins!"  # text = "Player " + str(game.result) + " wins!" ---> ORIGINAL
+                text = "HUMAN wins!"  # text = "Player " + str(game.result) + " wins!" ---> ORIGINAL
             else:
                 text = "Player AI wins!"
             textbox = myfont.render(text, False, GREY, WHITE)

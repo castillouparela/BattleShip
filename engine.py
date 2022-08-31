@@ -24,6 +24,7 @@ class Player:
         self.place_ships(sizes=[5, 4, 3, 3, 2])
         list_of_lists = [ship.indexes for ship in self.ships]
         self.indexes = [index for sublist in list_of_lists for index in sublist]
+        self.totalSP = 0  # Conteo de barcos hundidos para P1
 
     def place_ships(self, sizes):
         for size in sizes:
@@ -79,6 +80,8 @@ class Game:
         self.computer_turn = True if not self.human1 else False
         self.over = False
         self.result = None
+        self.scoreP1=0
+        self.scoreP2=0
 
     def make_move(self, i):
         player = self.player1 if self.player1_turn else self.player2
@@ -100,6 +103,10 @@ class Game:
                 if sunk:
                     for i in ship.indexes:
                         player.search[i] = "S"
+                if self.player1_turn:
+                    self.scoreP1 = self.scoreP1 + 1
+                else:
+                    self.scoreP2 = self.scoreP2 + 1
 
         else:
             player.search[i] = "M"

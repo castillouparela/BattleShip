@@ -306,9 +306,9 @@ class Battleship(Node):
     def __init__(self, player, game, **kwargs):  # def __init__(self, root, operators):
         # **kwargs evita la necesidad de ingresar nuevamente los atributos del método anterior
         super(Battleship, self).__init__(**kwargs)
+        self.game = game
         self.player = player
-        self.Game = Game
-        if player:
+        if self.player:
             self.v = float('-inf')
         else:
             self.v = float('inf')
@@ -336,8 +336,48 @@ class Battleship(Node):
 
     def heuristic(self):
 
-        # LLAMADO DEL PROGRAMA#
+        # setup
+        search = self.game.player1.search if self.game.player1_turn else self.game.player2.search
+        unknown = [i for i, square in enumerate(search) if square == "U"]
+        hits = [i for i, square in enumerate(search) if square == "H"]
 
+        # search in neighborhood of hits
+        unknown_with_neighboring_hits = []
+        unknown_with_neighboring_hits_2 = []
 
-nG = Game("nG")
-nG.play_game()
+        for u in unknown:
+            # Busca hits
+            if u + 1 in hits or u - 1 in hits or u - 10 in hits or u + 10 in hits:  # hit a la derecha o a la izquierda (1 recuadro)
+                unknown_with_neighboring_hits.append(u)
+            if u + 2 in hits or u - 2 in hits or u - 20 in hits or u + 20 in hits:  # hit a la derecha o a la izquierda (2 recuadros)
+                unknown_with_neighboring_hits_2.append(u)
+
+        # pick "U" square that has neighbors both marked as "H"
+        for u in unknown:
+
+            if u in unknown_with_neighboring_hits and u in unknown_with_neighboring_hits_2:
+                if self.game.computer_turn:  # VERIFICACIÓN DEL TURNO DE LA IA
+                    self.game.make_move(u)
+                return 2
+
+        if len(unknown_with_neighboring_hits) > 0:
+            if self.game.computer_turn:  # VERIFICACIÓN DEL TURNO DE LA IA
+                self.game.make_move(random.choice(unknown_with_neighboring_hits))
+            return 1
+
+        # checker board pattern
+        checker_board = []
+        for u in unknown:
+            row = u // 10
+            col = u % 10
+            if (row + col) % 2 == 0:
+                checker_board.append(u)
+        if len(checker_board) > 0:
+            if self.game.computer_turn:  # VERIFICACIÓN DEL TURNO DE LA IA
+                self.game.make_move(random.choice(checker_board))
+            return 0
+
+        # random moves
+        if self.game.computer_turn:
+            self.game.random_ai()
+        return -1
