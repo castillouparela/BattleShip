@@ -3,28 +3,21 @@ from engine import Game
 # setting up pygame
 import pygame
 
-
-import pydot
-from IPython.display import Image, display
-import queue
-import numpy as np
-
 pygame.init()
 pygame.font.init()
 pygame.display.set_caption("Battleship")
 myfont = pygame.font.SysFont("fresansttf", 100)
 
 # global variables
-SQ_SIZE = 35
+SQ_SIZE = 38
 H_MARGIN = SQ_SIZE * 4
 V_MARGIN = SQ_SIZE
 WIDTH = SQ_SIZE * 10 * 2 + H_MARGIN
 HEIGHT = SQ_SIZE * 10 * 2 + V_MARGIN
 SCREEN = pygame.display.set_mode((WIDTH, HEIGHT))
 INDENT = 10
-HUMAN1 = True #True es el jugador
-HUMAN2 = False #False coincide con la AI
-
+HUMAN1 = True  # True es el jugador
+HUMAN2 = False  # False coincide con la AI
 
 # colors
 GREY = (40, 50, 60)
@@ -48,6 +41,7 @@ def draw_grid(player, search=False, left=0, top=0):
             y += SQ_SIZE // 2
             pygame.draw.circle(SCREEN, COLORS[player.search[i]], (x, y), radius=SQ_SIZE // 4)
 
+
 # functions to draw ships onto the position grids
 def draw_ships(player, left=0, top=0):
     for ship in player.ships:
@@ -66,8 +60,11 @@ def draw_ships(player, left=0, top=0):
 player1 = Player()
 player2 = Player()
 
+game = engine.Game(HUMAN1, HUMAN2)
+nodeInit = main.Battleship(player=game.player1_turn, value="inicio", state=game.player1.search, game=game,
+                           operators=[i for i in range(100)])
+treeAlfaBeta = main.Tree(nodeInit, [i for i in range(100)])  # Considerar ubicar 100 como posición máxima en la matriz
 
-game = Game(HUMAN1, HUMAN2)
 # pygame loop
 animating = True
 pausing = False
@@ -118,26 +115,31 @@ while animating:
         # draw grids
         # search grids
         draw_grid(game.player1, search=True)
-        #draw_grid(game.player2, search=True, left=((WIDTH - H_MARGIN) // 2 + H_MARGIN), top=((HEIGHT - V_MARGIN) // 2) + V_MARGIN)
+        # draw_grid(game.player2, search=True, left=((WIDTH - H_MARGIN) // 2 + H_MARGIN), top=((HEIGHT - V_MARGIN) // 2) + V_MARGIN)
 
         # position grids
-        #draw_grid(game.player1, top=(HEIGHT - V_MARGIN) // 2 + V_MARGIN)  # position player 1
-        #draw_grid(game.player2, left=((WIDTH - H_MARGIN) // 2 + H_MARGIN))  # position player 2
+        draw_grid(game.player1, top=(HEIGHT - V_MARGIN) // 2 + V_MARGIN)  # position player 1
+        # draw_grid(game.player2, left=((WIDTH - H_MARGIN) // 2 + H_MARGIN))  # position player 2
 
         # draw ships
-        #draw_ships(game.player1, top=(HEIGHT - V_MARGIN) // 2 + V_MARGIN)
-        #draw_ships(game.player2, left=((WIDTH - H_MARGIN) // 2 + H_MARGIN))
+        draw_ships(game.player1, top=(HEIGHT - V_MARGIN) // 2 + V_MARGIN)
+        # draw_ships(game.player2, left=((WIDTH - H_MARGIN) // 2 + H_MARGIN))
 
         # computer moves
         if not game.over and game.computer_turn:
-            game.basic_ai() #CAMBIAR POR EL INICIO DEL JUEGO EN ALPHA-BETA
+            # game.basic_ai()  # CAMBIAR POR EL INICIO DEL JUEGO EN ALPHA-BETA
+
+            objective = treeAlfaBeta.AlfaBeta(2)
 
         # game over message
         if game.over:
-            text = "Player " + str(game.result) + " wins!"
+            if game.result == 1:
+                text = "Player HUMAN wins!"  # text = "Player " + str(game.result) + " wins!" ---> ORIGINAL
+            else:
+                text = "Player AI wins!"
             textbox = myfont.render(text, False, GREY, WHITE)
-            SCREEN.blit(textbox, (WIDTH//2 - 240, HEIGHT//2 - 50))
+            SCREEN.blit(textbox, (WIDTH // 2 - 240, HEIGHT // 2 - 50))
 
         # update screen
-        pygame.time.wait(200)
+        pygame.time.wait(120)
         pygame.display.flip()

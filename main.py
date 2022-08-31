@@ -3,7 +3,7 @@ import queue
 import random
 
 import engine
-from engine import Game, Player, Ship #Se importan las clases necesarias
+from engine import Game, Player, Ship  # Se importan las clases necesarias
 from random import randint as randint
 
 
@@ -197,7 +197,7 @@ class Tree():
         print()
         ## Comparar los hijos de root
         values = [c.v for c in self.root.children]
-        print(values)
+        print
         maxvalue = max(values)
         index = values.index(maxvalue)
         return self.root.children[index]
@@ -300,9 +300,10 @@ class Tree():
         else:
             return graph
 
+
 class Battleship(Node):
 
-    def __init__(self,player,game, **kwargs): #def __init__(self, root, operators):
+    def __init__(self, player, game, **kwargs):  # def __init__(self, root, operators):
         # **kwargs evita la necesidad de ingresar nuevamente los atributos del método anterior
         super(Battleship, self).__init__(**kwargs)
         self.player = player

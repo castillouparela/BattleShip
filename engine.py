@@ -109,7 +109,11 @@ class Game:
             if player.search[i] == "U":
                 game_over = False
         self.over = game_over
-        self.result = 1 if self.player1_turn else 2
+        print("TOTAL SP1")
+        print(self.scoreP1)
+        print("TOTAL SP2")
+        print(self.scoreP2)
+        self.result = 1 if self.scoreP1 > self.scoreP2 else 2
 
         # change the active team
         if not hit:
