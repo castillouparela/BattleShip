@@ -9,7 +9,7 @@ from random import randint as randint
 
 
 # --- CLASS NODO ---#
-class Node():
+class Node:
     def __init__(self, state, value, operators, operator=None, parent=None, objective=None):
         self.state = state
         self.value = value
@@ -193,28 +193,18 @@ class Tree():
 
     def AlfaBeta(self, depth):
         self.root.v = self.AlfaBetaR(self.root, depth, float('-inf'), float('inf'), True)
-        print(self.root.v)
-        print("Tercera linea de Alfabeta")
-        print()
         ## Comparar los hijos de root
         values = [c.v for c in self.root.children]
-        print
         maxvalue = max(values)
         index = values.index(maxvalue)
         return self.root.children[index]
 
     def AlfaBetaR(self, node, depth, alfa, beta, maxPlayer):
-        print("Entro al alphabetaR")
-
         if depth == 0 or node.isObjective():  # if depth == 0:
             node.v = node.heuristic()
-            print(node.v)
             return node.heuristic()
-
         ## Generar los hijos del nodo
         children = node.getchildrens()
-        print(node.getchildrens())
-
         ## Según el jugador que sea en el árbol
         if maxPlayer:
             value = float('-inf')
@@ -243,7 +233,6 @@ class Tree():
                         break
             # return value
         node.v = value
-        print(value)
         return value
 
     ## Método para dibujar el árbol
@@ -255,51 +244,6 @@ class Tree():
         graph.add_node(nodeGraph)
         path.pop()
         return self.drawTreeRec(self.root, nodeGraph, graph, 0, path.pop(), path)
-
-    ## Método recursivo para dibujar el árbol
-    def drawTreeRec(self, r, rootGraph, graph, i, topPath, path):
-        if r is not None:
-            children = r.children
-            for j, child in enumerate(children):
-                i = i + 1
-                color = "white"
-                if topPath.value == child.value:
-                    if len(path) > 0: topPath = path.pop()
-                    color = 'red'
-                c = pydot.Node(child.value,
-                               label=str(child.state) + r"\n" + r"\n" + "f=" + str(child.heuristic()) + r"\n" + str(
-                                   child.v),
-                               shape="circle", style="filled",
-                               fillcolor=color)
-                graph.add_node(c)
-                graph.add_edge(pydot.Edge(rootGraph, c,
-                                          label=str(child.operator) + '(' + str(child.cost()) + ')'))
-                graph = self.drawTreeRec(child, c, graph, i, topPath, path)  # recursive call
-            return graph
-        else:
-            return graph
-
-    def best(self, r, rootGraph, graph, i, topPath, path):
-        if r is not None:
-            children = r.children
-            for j, child in enumerate(children):
-                i = i + 1
-                color = "white"
-                if topPath.value == child.value:
-                    if len(path) > 0: topPath = path.pop()
-                    color = 'red'
-                c = pydot.Node(child.value,
-                               label=str(child.state) + r"\n" + r"\n" + "f=" + str(child.heuristic()) + r"\n" + str(
-                                   child.v),
-                               shape="circle", style="filled",
-                               fillcolor=color)
-                graph.add_node(c)
-                graph.add_edge(pydot.Edge(rootGraph, c,
-                                          label=str(child.operator) + '(' + str(child.cost()) + ')'))
-                graph = self.drawTreeRec(child, c, graph, i, topPath, path)  # recursive call
-            return graph
-        else:
-            return graph
 
 
 class Battleship(Node):
@@ -315,9 +259,7 @@ class Battleship(Node):
             self.v = float('inf')
 
     def getState(self, index):  # dado un operador determinado calcula un estado al que se llega
-
         nextState = self.game.player1.search[index]
-
         return nextState
 
     # Costo acumulativo(valor 1 en cada nivel)

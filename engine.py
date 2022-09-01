@@ -1,5 +1,7 @@
 import random
 
+import pygame
+
 
 class Ship:
     def __init__(self, size):
@@ -118,17 +120,11 @@ class Game:
                 if player.search[i] == "U":
                     game_over = False
             self.over = game_over
-            print("TOTAL SP1")
-            print(self.scoreP1)
-            print("TOTAL SP2")
-            print(self.scoreP2)
             self.result = 1 if self.scoreP1 > self.scoreP2 else 2
 
             # change the active team
             if not hit:
-
                 self.player1_turn = not self.player1_turn
-
                 # switch between human and computer turns
                 if (self.human1 and not self.human2) or (not self.human1 and self.human2):
                     self.computer_turn = not self.computer_turn
