@@ -1,7 +1,5 @@
 import random
 
-import pygame
-
 
 class Ship:
     def __init__(self, size):
@@ -128,53 +126,3 @@ class Game:
                 # switch between human and computer turns
                 if (self.human1 and not self.human2) or (not self.human1 and self.human2):
                     self.computer_turn = not self.computer_turn
-
-    """def random_ai(self):
-        search = self.player1.search if self.player1_turn else self.player2.search
-        unknown = [i for i, square in enumerate(search) if square == "U"]
-        if len(unknown) > 0:
-            random_index = random.choice(unknown)
-            self.make_move(random_index)"""
-
-    """def basic_ai(self):
-
-        # setup
-        search = self.player1.search if self.player1_turn else self.player2.search
-        unknown = [i for i, square in enumerate(search) if square == "U"]
-        hits = [i for i, square in enumerate(search) if square == "H"]
-
-        # search in neighborhood of hits
-        unknown_with_neighboring_hits = []
-        unknown_with_neighboring_hits_2 = []
-
-        for u in unknown:
-            # Busca hits
-            if u + 1 in hits or u - 1 in hits or u - 10 in hits or u + 10 in hits:  # hit a la derecha o a la izquierda (1 recuadro)
-                unknown_with_neighboring_hits.append(u)
-            if u + 2 in hits or u - 2 in hits or u - 20 in hits or u + 20 in hits:  # hit a la derecha o a la izquierda (2 recuadros)
-                unknown_with_neighboring_hits_2.append(u)
-
-        # pick "U" square that has neighbors both marked as "H"
-        for u in unknown:
-
-            if u in unknown_with_neighboring_hits and u in unknown_with_neighboring_hits_2:
-                self.make_move(u)
-                return
-
-        if len(unknown_with_neighboring_hits) > 0:
-            self.make_move(random.choice(unknown_with_neighboring_hits))
-            return
-
-        # checker board pattern
-        checker_board = []
-        for u in unknown:
-            row = u // 10
-            col = u % 10
-            if (row + col) % 2 == 0:
-                checker_board.append(u)
-        if len(checker_board) > 0:
-            self.make_move(random.choice(checker_board))
-            return
-
-        # random moves
-        self.random_ai()"""

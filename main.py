@@ -1,11 +1,6 @@
 import pydot
 import queue
-import random
-import pygame
-
-import engine
-from engine import Game, Player, Ship  # Se importan las clases necesarias
-from random import randint as randint
+from engine import *
 
 
 # --- CLASS NODO ---#
@@ -71,15 +66,15 @@ class Node:
     def f(self):
         return self.cost() + self.heuristic()
 
-    ### Crear método para criterio objetivo
-    ### Por defecto vamos a poner que sea igual al estado objetivo, para cada caso se puede sobreescribir la función
+    # Crear método para criterio objetivo
+    # Por defecto vamos a poner que sea igual al estado objetivo, para cada caso se puede sobreescribir la función
     def isObjective(self):
         return self.state == self.objective
 
         # --- CLASS ÁRBOL ---#
 
 
-class Tree():
+class Tree:
     def __init__(self, root, operators):
         self.root = root
         self.operators = operators
@@ -102,7 +97,7 @@ class Tree():
         self.root.children = []
         self.root.level = 0
 
-    ## Primero a lo ancho
+    # Primero a lo ancho
     def breadthFirst(self, endState):
         self.reinitRoot()
         pq = queue.Queue()
@@ -117,7 +112,7 @@ class Tree():
                     if endState == child:
                         return newChild
 
-    ## Primero en profundidad
+    # Primero en profundidad
     def dephFirst(self, endState):
         self.reinitRoot()
         pq = []
@@ -141,7 +136,7 @@ class Tree():
             for e in temp:
                 pq.append(e)
 
-    ## Costo uniforme
+    # Costo uniforme
     def costUniform(self, endState):
         self.reinitRoot()
         pq = queue.PriorityQueue()
@@ -157,7 +152,7 @@ class Tree():
                     if endState == child:
                         return newChild
 
-    ## Primero el mejor
+    # Primero el mejor
     def bestFirst(self, endState):
         self.reinitRoot()
         pq = queue.PriorityQueue()
@@ -173,7 +168,7 @@ class Tree():
                     if endState == child:
                         return newChild
 
-    ## A*
+    # A*
     def Aasterisk(self, endState):
         self.reinitRoot()
         pq = queue.PriorityQueue()
@@ -189,7 +184,7 @@ class Tree():
                     if endState == child:
                         return newChild
 
-        ## Generar los hijos del nodo
+        # Generar los hijos del nodo
 
     def AlfaBeta(self, depth):
         self.root.v = self.AlfaBetaR(self.root, depth, float('-inf'), float('inf'), True)
@@ -217,9 +212,7 @@ class Tree():
                     alfa = max(alfa, value)
                     if alfa >= beta:
                         break
-            # return value
-            # node.v=value
-            # return value
+
         else:
             value = float('inf')
             for i, child in enumerate(children):
@@ -235,7 +228,7 @@ class Tree():
         node.v = value
         return value
 
-    ## Método para dibujar el árbol
+    # Método para dibujar el árbol
     def draw(self, path):
         graph = pydot.Dot(graph_type='graph')
         nodeGraph = pydot.Node(str(self.root.state) + "-" + str(0),
@@ -265,17 +258,6 @@ class Battleship(Node):
     # Costo acumulativo(valor 1 en cada nivel)
     def cost(self):
         return self.level
-
-    # def isObjective(self):
-    # El estado objetivo se alcanza cuando las posiciones que ha adivinado el jugador 1 (AI) coincide con las posiciones
-    # en las que se encuentran los barcos del jugador 2 (Usuario)
-
-    # for element in self.Game.p2_ships: #Itera las posiciones de las naves del jugador 2 (Usuario)
-    # if element in self.Game.p1_guess_board: #Itera los recuadros que ha adivinado la el jugador 1 (AI)
-    # print(f"el elemento {element} está repetido!")
-    # return True
-    # else:
-    # return False
 
     def heuristic(self):
 
@@ -319,8 +301,3 @@ class Battleship(Node):
             if self.game.computer_turn:  # VERIFICACIÓN DEL TURNO DE LA IA
                 self.game.make_move(random.choice(checker_board))
             return 0
-
-        """# random moves
-        if self.game.computer_turn:
-            self.game.random_ai()
-        return -1"""
