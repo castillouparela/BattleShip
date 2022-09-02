@@ -122,8 +122,9 @@ GREEN = (50, 200, 150)
 RED = (150, 50, 100)
 RED2 = (250, 0, 0)
 BLUE = (50, 150, 200)
+BLUE_AI = (0, 0, 205)
 ORANGE = (250, 140, 20)
-COLORS = {"U": GREY, "M": BLUE, "H": ORANGE, "S": RED, "R": RED2}
+COLORS = {"U": GREY, "M": BLUE, "H": ORANGE, "S": RED, "R": BLUE_AI}
 
 
 # function to draw a grid
