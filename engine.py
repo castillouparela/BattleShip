@@ -111,7 +111,10 @@ class Game:
                         self.scoreP2 = self.scoreP2 + 1
 
             else:
-                player.search[i] = "M"
+                if self.computer_turn:
+                    player.search[i] = "R"
+                else:
+                    player.search[i] = "M"
             # check if game over
             game_over = True
             for i in opponent.indexes:

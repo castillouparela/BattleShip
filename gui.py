@@ -123,7 +123,7 @@ RED = (150, 50, 100)
 RED2 = (250, 0, 0)
 BLUE = (50, 150, 200)
 ORANGE = (250, 140, 20)
-COLORS = {"U": GREY, "M": BLUE, "H": ORANGE, "S": RED}
+COLORS = {"U": GREY, "M": BLUE, "H": ORANGE, "S": RED, "R": RED2}
 
 
 # function to draw a grid
